@@ -1,0 +1,124 @@
+# Mock Lab Testbed - For testing without real devices
+# This testbed uses the mock adapter for framework testing
+
+testbed:
+  name: Mock Lab Environment
+  description: Simulated firewall environment for testing and development
+
+  credentials:
+    default:
+      username: admin
+      password: admin
+
+devices:
+  mock-fw-01:
+    vendor: mock
+    device_type: mock
+    model: MockFW-5000
+    serial_number: MOCK001234567
+    firmware_version: "10.2.3"
+    environment: lab
+    location: Virtual Lab
+    tags:
+      - mock
+      - testing
+      - primary
+    
+    credentials:
+      default:
+        username: admin
+        password: admin
+    
+    connections:
+      default:
+        host: 127.0.0.1
+        port: 443
+        protocol: https
+        verify_ssl: false
+    
+    # Mock-specific settings
+    mock_ntp_synced: true
+    mock_ntp_offset_ms: 0.5
+    mock_ha_enabled: true
+    mock_ha_state: active
+    mock_cpu_usage: 35.0
+    mock_memory_usage: 60.0
+    mock_disk_usage: 45.0
+    mock_license_valid: true
+    mock_license_days: 365
+    mock_vpn_tunnels_up: true
+    mock_session_util: 25.0
+    mock_threat_enabled: true
+
+  mock-fw-02:
+    vendor: mock
+    device_type: mock
+    model: MockFW-5000
+    serial_number: MOCK001234568
+    firmware_version: "10.2.3"
+    environment: lab
+    location: Virtual Lab
+    tags:
+      - mock
+      - testing
+      - secondary
+    
+    credentials:
+      default:
+        username: admin
+        password: admin
+    
+    connections:
+      default:
+        host: 127.0.0.2
+        port: 443
+        protocol: https
+        verify_ssl: false
+    
+    # Mock-specific settings - HA passive peer
+    mock_ntp_synced: true
+    mock_ha_enabled: true
+    mock_ha_state: passive
+    mock_cpu_usage: 15.0
+    mock_memory_usage: 45.0
+    mock_license_valid: true
+    mock_vpn_tunnels_up: true
+
+  mock-fw-failing:
+    vendor: mock
+    device_type: mock
+    model: MockFW-3000
+    serial_number: MOCK001234569
+    firmware_version: "9.1.0"
+    environment: lab
+    location: Virtual Lab
+    tags:
+      - mock
+      - testing
+      - failing
+    
+    credentials:
+      default:
+        username: admin
+        password: admin
+    
+    connections:
+      default:
+        host: 127.0.0.3
+        port: 443
+    
+    # Mock settings - simulate some failures
+    mock_ntp_synced: false
+    mock_ha_enabled: false
+    mock_cpu_usage: 85.0
+    mock_memory_usage: 92.0
+    mock_license_valid: false
+    mock_license_days: -30
+    mock_vpn_tunnels_up: false
+    mock_session_util: 88.0
+    mock_threat_enabled: false
+
+custom:
+  environment: development
+  team: NetOps
+  contact: netops@example.com

@@ -1,0 +1,108 @@
+# Production Testbed Sample - Template for real device testing
+# Replace placeholder values with actual device information
+
+testbed:
+  name: Production Firewalls
+  description: Production firewall certification testbed
+
+  credentials:
+    default:
+      username: certify_user
+      password: ${FIREWALL_PASSWORD}
+      # Or use API key
+      # api_key: ${FIREWALL_API_KEY}
+
+devices:
+  # Palo Alto Networks Firewall
+  pa-fw-prod-01:
+    vendor: paloalto
+    device_type: physical
+    model: PA-5220
+    serial_number: 0123456789
+    firmware_version: "10.2.3"
+    minimum_firmware: "10.2.0"
+    environment: production
+    location: DC-East-Rack15
+    owner: Network Security Team
+    tags:
+      - production
+      - paloalto
+      - east
+      - ha-primary
+    
+    credentials:
+      default:
+        username: certify_user
+        password: ${PA_PASSWORD}
+        api_key: ${PA_API_KEY}
+    
+    connections:
+      default:
+        host: 10.0.1.1
+        port: 443
+        protocol: https
+        verify_ssl: true
+        timeout: 60
+
+  pa-fw-prod-02:
+    vendor: paloalto
+    device_type: physical
+    model: PA-5220
+    serial_number: 0123456790
+    firmware_version: "10.2.3"
+    minimum_firmware: "10.2.0"
+    environment: production
+    location: DC-East-Rack16
+    owner: Network Security Team
+    tags:
+      - production
+      - paloalto
+      - east
+      - ha-secondary
+    
+    credentials:
+      default:
+        username: certify_user
+        password: ${PA_PASSWORD}
+    
+    connections:
+      default:
+        host: 10.0.1.2
+        port: 443
+        protocol: https
+        verify_ssl: true
+
+  # FortiGate Firewall
+  fg-fw-prod-01:
+    vendor: fortinet
+    device_type: physical
+    model: FortiGate-3000D
+    serial_number: FG300D1234567890
+    firmware_version: "7.2.4"
+    minimum_firmware: "7.2.0"
+    environment: production
+    location: DC-West-Rack10
+    owner: Network Security Team
+    tags:
+      - production
+      - fortinet
+      - west
+    
+    credentials:
+      default:
+        username: certify_user
+        password: ${FG_PASSWORD}
+    
+    connections:
+      default:
+        host: 10.0.2.1
+        port: 443
+        protocol: https
+        verify_ssl: true
+        timeout: 60
+
+custom:
+  environment: production
+  change_window: "Sunday 02:00-06:00 UTC"
+  notification_email: noc@example.com
+  compliance_framework: "CIS Benchmark"
